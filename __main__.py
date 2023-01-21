@@ -1,27 +1,25 @@
-'''
-This code links the GUI to the functionality.
-
-We defina aclass to inherit from the GUI generated
-by PYUIC to give access to GUI elements in the simple
-form self.button1 e.t.c.
-
-We then call an instance of the functionality class
-which is held readily accessible in func
-
-'''
-
-from .PythonFunctionality import functionality
 from PyQt5.QtWidgets import QTableView
 from .menus.exampleMenu import *
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow
+from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QGridLayout
 from PyQt5.QtWidgets import QMenuBar
 from PyQt5.QtWidgets import QMenu
 from PyQt5.QtCore import Qt
-func = functionality.functionality()
 
 from .appSettings import *
+
+class UIWindow(QWidget):
+    """
+    This "window" is a QWidget. If it has no parent, it
+    will appear as a free-floating window as we want.
+    """
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout()
+        self.label = QLabel("Another Window")
+        layout.addWidget(self.label)
+        self.setLayout(layout)
 
 class GUI(QMainWindow):
 	# Snip...
@@ -35,7 +33,8 @@ class GUI(QMainWindow):
 		#This is whete you define 
 		#all of your button actions.
 		fileMenu(self)
-	
+
+
 		return
 
 	def assignSettings(self, settings):
@@ -63,8 +62,6 @@ if __name__ == '__main__':
 
 	import sys
 	from PyQt5.QtWidgets import QApplication, QMainWindow
-
-
 
 	app = QApplication(sys.argv)
 	ui = GUI(app, appSettings)
